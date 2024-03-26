@@ -44,6 +44,7 @@ app.use(
     })
 );
 
+
 app.use('',express.static(path.join(__dirname,'./public')));
 
 // passport
