@@ -7,8 +7,8 @@ import ErrorHandler from '../utils/errorHandler.js';
 import { compareSync } from 'bcrypt';
 
 export const addProduct = catchAsyncError(async (req, res) => {
-	const {name, description, shortdescription, price, category, quantity} = req.body;
-    if(req.files.length == 0 || !name || !description || !shortdescription || !price || !category || !quantity ) return res.status(401).json({
+	const {name,slug, description, shortdescription, price, category:productCategory, quantity} = req.body;
+    if(req.files.length == 0 || !slug || !name || !description || !shortdescription || !price || !productCategory || !quantity ) return res.status(401).json({
         success: false,
         message: "All fields are required"
     })
@@ -24,7 +24,9 @@ export const addProduct = catchAsyncError(async (req, res) => {
     
     
     await productModel.create({
-        description, shortdescription, price, category, quantity,images,name
+        slug,
+        category: Date.now(),
+        description, shortdescription, price, quantity,images,name,productCategory
     })
 
     res.status(201).json({
@@ -34,7 +36,7 @@ export const addProduct = catchAsyncError(async (req, res) => {
 });
 
 export const editProduct = catchAsyncError(async (req, res,next) => {
-	let {name, description, shortdescription, price, category, quantity,images:clientImages} = req.body;
+	let {name,slug, description, shortdescription, price, category:productCategory, quantity,images:clientImages} = req.body;
     const {id} = req.params;
     const product = await productModel.findById(id);
     
@@ -71,7 +73,8 @@ export const editProduct = catchAsyncError(async (req, res,next) => {
     
     
     await productModel.findByIdAndUpdate(id,{
-        description, shortdescription, price, category, quantity,images
+        name,slug,
+        description, shortdescription, price, productCategory, quantity,images
     })
 
 
@@ -108,8 +111,8 @@ export const deleteProduct = catchAsyncError(async (req, res,next) => {
 
 export const getSingleProduct = catchAsyncError(async (req, res,next) => {
 	
-    const {id} = req.params;
-    const product = await productModel.findById(id);
+    const {slug} = req.params;
+    const product = await productModel.findOne({slug});
     
     if(!product){
         return next(new ErrorHandler("invalid product"));

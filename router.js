@@ -30,7 +30,7 @@ router.route('/reset-password/:token').put(resetPassword);
 router.route('/product/add').post(isAuthenticate,isCheckRole('admin'),uploader.array('files'),addProduct);
 router.route('/product/update/:id').put(isAuthenticate,isCheckRole('admin'),uploader.array('files'),editProduct);
 router.route('/product/delete/:id').delete(isAuthenticate,isCheckRole('admin'), deleteProduct);
-router.route('/product/:id').get(getSingleProduct);
+router.route('/product/:slug').get(getSingleProduct);
 router.route('/products').get(getProducts);
 
 

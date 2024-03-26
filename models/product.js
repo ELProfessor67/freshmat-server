@@ -16,7 +16,10 @@ const productSchema = new mongoose.Schema({
         type: Number,
     },
     category: {
-        type: String,
+        type: String
+    },
+    productCategory: {
+        type: String
     },
     quantity: {
         type: Number,
@@ -27,6 +30,10 @@ const productSchema = new mongoose.Schema({
           type: String // Array of image URLs
         }
     ],
+    slug: {
+        type: String,
+        unique: true
+    },
     reviews: [
         {
           user: {
