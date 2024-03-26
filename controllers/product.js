@@ -4,7 +4,6 @@ const __dirname = path.resolve();
 import productModel from '../models/product.js';
 import { deleteFile } from '../utils/deleteFile.js';
 import ErrorHandler from '../utils/errorHandler.js';
-import { compareSync } from 'bcrypt';
 
 export const addProduct = catchAsyncError(async (req, res) => {
 	const {name,slug, description, shortdescription, price, category:productCategory, quantity} = req.body;

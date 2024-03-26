@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import validator from "validator";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 // Define the CartItem schema
 const cartItemSchema = new mongoose.Schema({
