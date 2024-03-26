@@ -13,12 +13,12 @@ export const isAuthenticate = async (req,res,next) => {
             const decodeToken = jwt.verify(token,process.env.JWT_SECRET);
             user = await UserModel.findById(decodeToken._id);
         }
-        
+        console.log(token,"token")
         
         if(!user && req.user){
             user = await UserModel.findById(req.user._id);
         }
-    
+        console.log(user,"user")
         if(!user) throw new ErrorHandler('Unauthorize user',401);
        
         req.user = user;
